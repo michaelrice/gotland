@@ -47,10 +47,21 @@ class api(object):
             response = urllib2.urlopen(path)
             data = json.loads(response.read())
         except:
-            return False
+            return None
+        return data
+
+    def get_nodes(self):
+        path = self.end_point + "nodes"
+        data = []
+        try:
+            response = urllib2.urlopen(path)
+            data = json.loads(response.read())
+        except:
+            return None
         return data
 
 if __name__ == "__main__":
     mytest = api()
     print mytest.check_aliveness()
     print mytest.get_overview()
+    print mytest.get_nodes()

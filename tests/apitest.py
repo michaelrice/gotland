@@ -26,6 +26,11 @@ class RabbitApiTests(unittest.TestCase):
         info_dict = self.rabbit.get_overview()
         self.assertDictContainsSubset({"management_version":"3.1.5"},info_dict)
 
+    def test_get_nodes(self):
+        info_list = self.rabbit.get_nodes()
+        self.assertIsInstance(info_list, list)
+
+
 def main():
     unittest.main()
 
