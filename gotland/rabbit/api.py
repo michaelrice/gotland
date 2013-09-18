@@ -1,6 +1,6 @@
 import urllib2
 import json
-
+import urllib
 
 class api(object):
 
@@ -60,8 +60,23 @@ class api(object):
             return None
         return data
 
+    def get_node_info(self,node_name, get_memory=False):
+        path = self.end_point + "nodes/" + node_name
+        data = {}
+        if get_memory:
+            vals = {"memory": "true"}
+            data = urllib.urlencode(vals)
+            path = path + '?' + data
+        try:
+            response = urllib2.urlopen(path)
+            data = json.loads(response.read())
+        except:
+            return None
+        return data
+
 if __name__ == "__main__":
     mytest = api()
     print mytest.check_aliveness()
     print mytest.get_overview()
     print mytest.get_nodes()
+    print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
