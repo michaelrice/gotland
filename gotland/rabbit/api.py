@@ -74,9 +74,36 @@ class api(object):
             return None
         return data
 
+    def get_extensions(self):
+        path = self.end_point + "extensions"
+        data = []
+        try:
+            response = urllib2.urlopen(path)
+            data = json.loads(response.read())
+        except:
+            return None
+        return data
+
+    def get_connections(self):
+        path = self.end_point + "connections"
+        data = []
+        try:
+            response = urllib2.urlopen(path)
+            data = json.loads(response.read())
+        except:
+            return None
+        return data
+
+    def get_connections_name(self,name):
+        path = self.end_point + "connections/" + name
+        data = []
+        return data
+
 if __name__ == "__main__":
     mytest = api()
-    print mytest.check_aliveness()
-    print mytest.get_overview()
-    print mytest.get_nodes()
-    print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
+    #print mytest.check_aliveness()
+    #print mytest.get_overview()
+    #print mytest.get_nodes()
+    #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
+    #print mytest.get_extensions()
+    print (mytest.get_connections()[0]).get("name")
