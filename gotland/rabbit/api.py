@@ -41,6 +41,8 @@ class api(object):
             return False
 
     def get_overview(self):
+        """Various random bits of information that describe the 
+        whole system."""
         path = self.end_point + "overview"
         data = {}
         try:
@@ -51,6 +53,7 @@ class api(object):
         return data
 
     def get_nodes(self):
+        """A list of nodes in the RabbitMQ cluster."""
         path = self.end_point + "nodes"
         data = []
         try:
@@ -61,6 +64,8 @@ class api(object):
         return data
 
     def get_node_info(self,node_name, get_memory=False):
+        """An individual node in the RabbitMQ cluster. Add "get_memory=true" 
+        to get memory statistics."""
         path = self.end_point + "nodes/" + node_name
         data = {}
         if get_memory:
@@ -75,6 +80,7 @@ class api(object):
         return data
 
     def get_extensions(self):
+        """A list of extensions to the management plugin"""
         path = self.end_point + "extensions"
         data = []
         try:
@@ -85,6 +91,7 @@ class api(object):
         return data
 
     def get_connections(self):
+        """A list of all open connections."""
         path = self.end_point + "connections"
         data = []
         try:
@@ -95,9 +102,40 @@ class api(object):
         return data
 
     def get_connections_name(self,name):
+        """Gets info for an individual connection"""
         path = self.end_point + "connections/" + name
         data = []
         return data
+
+    def delete_connection(self,name=None,reason=None):
+        """Removes a connection by name, with an optional reason"""
+        path = self.end_point + "connections/" + name
+        pass
+
+    def get_channels(self):
+        """List of all channels"""
+        return []
+
+    def get_channels_name(self, channel=None):
+        """Info about a specific channel"""
+        return []
+
+    def get_exchanges(self):
+        """List of all exchanges"""
+        return []
+
+    def get_exchanges_vhost(self,vhost=None):
+        """List of all exchanges on a given vhost"""
+        return []
+
+    def get_exchanges_name_vhost(self,vhost=None, name=None):
+        """Gets info about a given echange (name) on a given vhost"""
+        return {}
+
+    def get_bindings_for_exchange(self,vhost=None,exchange_name=None):
+        """A list of all bindings in which a given exchange is the source."""
+        return []
+
 
 if __name__ == "__main__":
     mytest = api()
