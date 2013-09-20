@@ -14,7 +14,8 @@ class RabbitApiTests(unittest.TestCase):
         self.assertTrue(alive)
 
     def test_aliveness_fails(self):
-        dead = self.rabbit.check_aliveness(vhost="failme")
+        """Call the check with a vhost that isnt real"""
+        dead = self.rabbit.check_aliveness("fail")
         self.assertFalse(dead)
 
     def test_overview(self):
@@ -30,6 +31,24 @@ class RabbitApiTests(unittest.TestCase):
         info_list = self.rabbit.get_nodes()
         self.assertIsInstance(info_list, list)
 
+    def test_get_node_info(self):
+        node_list = self.rabbit.get_nodes()
+        node_info_dict = self.rabbit.get_node_info(node_list[0]["name"],
+                get_memory=True)
+        self.assertIsInstance(node_info_dict,dict)
+
+    def test_get_extensions(self):
+        extension_list = self.rabbit.get_extensions()
+        self.assertIsInstance(extension_list, list)
+
+    def test_get_connections(self):
+        connection_list = self.rabbit.get_connections()
+        self.assertIsInstance(connection_list, list)
+
+    def test_get_connections_name(self):
+        connection_list = self.rabbit.get_connections()
+        connection_dict = self.rabbit.get_connections_name(connection_list[-1]["name"])
+        self.assertIsInstance(connection_dict,dict)
 
 def main():
     unittest.main()

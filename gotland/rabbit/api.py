@@ -37,6 +37,8 @@ class api(object):
         """
         path = self.end_point + "aliveness-test/" + vhost
         data = self._fetch_data(path)
+        if data is None:
+            return False
         try:
             if data.get("status") != "ok":
                 return False
@@ -82,7 +84,8 @@ class api(object):
 
     def get_connections_name(self,name):
         """Gets info for an individual connection"""
-        path = self.end_point + "connections/" + name
+        name = urllib.quote(name)
+        path = self.end_point + "connections/{0}".format(name)
         data = self._fetch_data(path)
         return data
 
@@ -133,5 +136,5 @@ if __name__ == "__main__":
     #print mytest.get_nodes()
     #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
     #print mytest.get_extensions()
-    #print (mytest.get_connections()[0]).get("name")
+    print (mytest.get_connections()[0]).get("name")
     print mytest.get_channels()
