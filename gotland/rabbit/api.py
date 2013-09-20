@@ -19,6 +19,15 @@ class api(object):
         opener = urllib2.build_opener(authhandler)
         urllib2.install_opener(opener)
 
+    def _fetch_data(self,path):
+        data = None
+        try:
+            response = urllib2.urlopen(path)
+            data = json.loads(response.read())
+        except:
+            pass
+        return data
+
     def check_aliveness(self, vhost="%2f"):
         """Check aliveness of a given vhost. By default / will be checked.
         Usage::
@@ -27,12 +36,7 @@ class api(object):
             handle_down_event()
         """
         path = self.end_point + "aliveness-test/" + vhost
-        data = None
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except urllib2.URLError:
-            return False
+        data = self._fetch_data(path)
         try:
             if data.get("status") != "ok":
                 return False
@@ -44,104 +48,90 @@ class api(object):
         """Various random bits of information that describe the 
         whole system."""
         path = self.end_point + "overview"
-        data = {}
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except:
-            return None
+        data = self._fetch_data(path)
         return data
 
     def get_nodes(self):
         """A list of nodes in the RabbitMQ cluster."""
         path = self.end_point + "nodes"
-        data = []
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except:
-            return None
+        data = self._fetch_data(path)
         return data
 
     def get_node_info(self,node_name, get_memory=False):
         """An individual node in the RabbitMQ cluster. Add "get_memory=true" 
         to get memory statistics."""
         path = self.end_point + "nodes/" + node_name
-        data = {}
         if get_memory:
             vals = {"memory": "true"}
             data = urllib.urlencode(vals)
             path = path + '?' + data
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except:
-            return None
+        data = self._fetch_data(path)
         return data
 
     def get_extensions(self):
         """A list of extensions to the management plugin"""
         path = self.end_point + "extensions"
-        data = []
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except:
-            return None
+        data = self._fetch_data(path)
         return data
 
     def get_connections(self):
         """A list of all open connections."""
         path = self.end_point + "connections"
-        data = []
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except:
-            return None
+        data = self._fetch_data(path)
         return data
 
     def get_connections_name(self,name):
         """Gets info for an individual connection"""
         path = self.end_point + "connections/" + name
-        data = []
+        data = self._fetch_data(path)
         return data
 
     def delete_connection(self,name=None,reason=None):
         """Removes a connection by name, with an optional reason"""
-        path = self.end_point + "connections/" + name
         pass
+        #path = self.end_point + "connections/" + name
+        #return data
 
     def get_channels(self):
         """List of all channels"""
-        return []
+        path = self.end_point + "channels"
+        data = self._fetch_data(path)
+        return data
 
     def get_channels_name(self, channel=None):
         """Info about a specific channel"""
-        return []
+        path = self.end_point + "channels/{0}".format(channel)
+        data = self._fetch_data(path)
+        return data
 
     def get_exchanges(self):
         """List of all exchanges"""
-        return []
+        path = self.end_point + "exchanges"
+        data = self._fetch_data(path)
+        return data
 
     def get_exchanges_vhost(self,vhost=None):
         """List of all exchanges on a given vhost"""
+        path = self.end_point + ""
         return []
 
     def get_exchanges_name_vhost(self,vhost=None, name=None):
         """Gets info about a given echange (name) on a given vhost"""
+        path = self.end_point + ""
         return {}
 
     def get_bindings_for_exchange(self,vhost=None,exchange_name=None):
         """A list of all bindings in which a given exchange is the source."""
+        path = self.end_point + ""
         return []
 
 
 if __name__ == "__main__":
     mytest = api()
-    #print mytest.check_aliveness()
+    print mytest.check_aliveness()
     #print mytest.get_overview()
     #print mytest.get_nodes()
     #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
     #print mytest.get_extensions()
-    print (mytest.get_connections()[0]).get("name")
+    #print (mytest.get_connections()[0]).get("name")
+    print mytest.get_channels()
