@@ -47,8 +47,18 @@ class RabbitApiTests(unittest.TestCase):
 
     def test_get_connections_name(self):
         connection_list = self.rabbit.get_connections()
-        connection_dict = self.rabbit.get_connections_name(connection_list[-1]["name"])
+        connection_dict = self.rabbit.get_connections_name(
+                connection_list[-1]["name"])
         self.assertIsInstance(connection_dict,dict)
+
+    def test_get_channels(self):
+        channel_list = self.rabbit.get_channels()
+        self.assertIsInstance(channel_list,list)
+
+    def test_get_channels_name(self):
+        channel_info_dict = self.rabbit.get_channels_name(
+                channel=self.rabbit.get_channels()[0]["name"])
+        self.assertIsInstance(channel_info_dict, dict)
 
 def main():
     unittest.main()

@@ -103,6 +103,7 @@ class api(object):
 
     def get_channels_name(self, channel=None):
         """Info about a specific channel"""
+        channel = urllib.quote(channel)
         path = self.end_point + "channels/{0}".format(channel)
         data = self._fetch_data(path)
         return data
@@ -140,7 +141,7 @@ if __name__ == "__main__":
     #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
     #print mytest.get_extensions()
     #print (mytest.get_connections()[0]).get("name")
-    #print mytest.get_channels()
+    print mytest.get_channels()
     #print mytest.get_exchanges()
     #print mytest.get_exchanges_name_vhost(exchange_name="amq.rabbitmq.trace")
     #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace")
