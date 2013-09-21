@@ -132,6 +132,19 @@ class api(object):
         path = path.format(vhost,exchange_name,stype)
         return self._fetch_data(path)
 
+    def get_queues(self):
+        """A list of all queues on the server"""
+        path = self.end_point + "queues"
+        return self._fetch_data(path)
+
+    def get_queues_vhost(self,vhost="%2f"):
+        path = self.end_point + "queues/{0}".format(vhost)
+        return self._fetch_data(path)
+
+    def get_queue_name_vhost(self,queue_name=None,vhost="%2f"):
+        path = self.end_point + "queues/{0}/{1}".format(vhost,queue_name)
+        return self._fetch_data(path)
+
 
 if __name__ == "__main__":
     mytest = api()
@@ -141,9 +154,12 @@ if __name__ == "__main__":
     #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
     #print mytest.get_extensions()
     #print (mytest.get_connections()[0]).get("name")
-    print mytest.get_channels()
+    #print mytest.get_channels()
     #print mytest.get_exchanges()
     #print mytest.get_exchanges_name_vhost(exchange_name="amq.rabbitmq.trace")
     #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace")
     #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace",
     #        stype="destination")
+    #print mytest.get_queues()
+    #print mytest.get_queues_vhost()
+    print mytest.get_queue_name_vhost(queue_name="aliveness-test")
