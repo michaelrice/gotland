@@ -113,20 +113,23 @@ class api(object):
         data = self._fetch_data(path)
         return data
 
-    def get_exchanges_vhost(self,vhost=None):
+    def get_exchanges_vhost(self,vhost="%2f"):
         """List of all exchanges on a given vhost"""
-        path = self.end_point + ""
-        return []
+        path = self.end_point + "exchanges/{0}".format(vhost)
+        data = self._fetch(path)
+        return data
 
-    def get_exchanges_name_vhost(self,vhost=None, name=None):
+    def get_exchanges_name_vhost(self,vhost="%2f", exchange_name=None):
         """Gets info about a given echange (name) on a given vhost"""
-        path = self.end_point + ""
-        return {}
+        path = self.end_point + "exchanges/{0}/{1}".format(vhost,exchange_name)
+        return self._fetch_data(path)
 
-    def get_bindings_for_exchange(self,vhost=None,exchange_name=None):
+    def get_bindings_for_exchange(self,vhost="%2f",exchange_name=None, 
+            stype="source"):
         """A list of all bindings in which a given exchange is the source."""
-        path = self.end_point + ""
-        return []
+        path = self.end_point + "exchanges/{0}/{1}/bindings/{2}"
+        path = path.format(vhost,exchange_name,stype)
+        return self._fetch_data(path)
 
 
 if __name__ == "__main__":
@@ -136,5 +139,10 @@ if __name__ == "__main__":
     #print mytest.get_nodes()
     #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
     #print mytest.get_extensions()
-    print (mytest.get_connections()[0]).get("name")
-    print mytest.get_channels()
+    #print (mytest.get_connections()[0]).get("name")
+    #print mytest.get_channels()
+    #print mytest.get_exchanges()
+    #print mytest.get_exchanges_name_vhost(exchange_name="amq.rabbitmq.trace")
+    #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace")
+    #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace",
+    #        stype="destination")
