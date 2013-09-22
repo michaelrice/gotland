@@ -23,7 +23,7 @@ The following calls need to be implemented
 18. /api/policies/vhost
 19. /api/policies/vhost/name
 
-# PUT:
+#PUT:
 
 The following PUT methods need to be implemented
 
@@ -35,7 +35,8 @@ The following PUT methods need to be implemented
 6. /api/parameters/component/vhost/name
 7. /api/policies/vhost/name
 
-# DELETE:
+#DELETE:
+
 The following DELETE methods need to be implemented
 
 1. /api/connections/name
@@ -49,7 +50,9 @@ The following DELETE methods need to be implemented
 9. /api/permissions/vhost/user
 10. /api/parameters/component/vhost/name
 11. /api/policies/vhost/name
-# POST:
+
+#POST:
+
 The following POST methods need to be implemented
 
 1. /api/definitions
