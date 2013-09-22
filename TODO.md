@@ -62,4 +62,6 @@ The following POST methods need to be implemented
 5. /api/bindings/vhost/e/exchange/q/queue
 6. /api/bindings/vhost/e/source/e/destination
 
+#General
+
 Add a check to make sure the required params have been supplied
