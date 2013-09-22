@@ -47,7 +47,7 @@ class api(object):
             return False
 
     def get_overview(self):
-        """Various random bits of information that describe the 
+        """Various random bits of information that describe the
         whole system."""
         path = self.end_point + "overview"
         data = self._fetch_data(path)
@@ -60,7 +60,7 @@ class api(object):
         return data
 
     def get_node_info(self,node_name, get_memory=False):
-        """An individual node in the RabbitMQ cluster. Add "get_memory=true" 
+        """An individual node in the RabbitMQ cluster. Add "get_memory=true"
         to get memory statistics."""
         path = self.end_point + "nodes/" + node_name
         if get_memory:
@@ -125,7 +125,7 @@ class api(object):
         path = self.end_point + "exchanges/{0}/{1}".format(vhost,exchange_name)
         return self._fetch_data(path)
 
-    def get_bindings_for_exchange(self,vhost="%2f",exchange_name=None, 
+    def get_bindings_for_exchange(self,vhost="%2f",exchange_name=None,
             stype="source"):
         """A list of all bindings in which a given exchange is the source."""
         path = self.end_point + "exchanges/{0}/{1}/bindings/{2}"
@@ -137,21 +137,61 @@ class api(object):
         path = self.end_point + "queues"
         return self._fetch_data(path)
 
-    def get_queues_vhost(self,vhost="%2f"):
+    def get_queues_by_vhost(self,vhost="%2f"):
+        """A list of all queues in a given virtual host."""
         path = self.end_point + "queues/{0}".format(vhost)
         return self._fetch_data(path)
 
-    def get_queue_name_vhost(self,queue_name=None,vhost="%2f"):
+    def get_queue_by_name(self,queue_name=None,vhost="%2f"):
+        """Inforation about an individual queue. Takes optional vhost param
+        Checks / as the default vhost"""
         path = self.end_point + "queues/{0}/{1}".format(vhost,queue_name)
         return self._fetch_data(path)
 
+    def get_bindings_by_queue(self,queue_name=None,vhost="%2f"):
+        """A list of all bindings on a given queue. Takes an optional
+        vhost param. The default vhost is /"""
+        path = self.end_point + "queues/{0}/{1}/bindings"
+        path = path.format(vhost,queue_name)
+        return self._fetch_data(path)
+
+    def get_bindings(self):
+        """A list of all bindings."""
+        path = self.end_point + "bindings"
+        return self._fetch_data(path)
+
+    def get_bindings_by_vhost(self,vhost="%2f"):
+        """A list of all bindings in a given virtual host."""
+        path =  self.end_point + "bindings/{0}".format(vhost)
+        return self._fetch_data(path)
+
+    def get_bindings_between_exchange_and_queue(self,queue_name=None,
+            exchange_name=None,vhost=None):
+        """A list of all bindings between an exchange and a queue.
+        Remember, an exchange and a queue can be bound together many times!
+        """
+        path = self.end_point + "bindings/{0}/e/{1}/q/{2}"
+        path = path.format(vhost,exchange_name,queue_name)
+        return self._fetch_data(path)
+
+    def update_bindings_between_exchange_and_queue(self):
+        """A list of all bindings between an exchange and a queue.
+        Remember, an exchange and a queue can be bound together many times!
+        To create a new binding, POST to this URI. You will need a body looking
+        something like this:
+            {"routing_key":"my_routing_key","arguments":[]}
+
+        All keys are optional. The response will contain a Location header
+        telling you the URI of your new binding."""
+        pass
 
 if __name__ == "__main__":
     mytest = api()
     print mytest.check_aliveness()
     #print mytest.get_overview()
     #print mytest.get_nodes()
-    #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),get_memory=True)
+    #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),
+    #                             get_memory=True)
     #print mytest.get_extensions()
     #print (mytest.get_connections()[0]).get("name")
     #print mytest.get_channels()
