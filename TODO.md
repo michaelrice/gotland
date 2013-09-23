@@ -64,4 +64,10 @@ The following POST methods need to be implemented
 
 #General
 
-Add a check to make sure the required params have been supplied
+* Add a check to make sure the required params have been supplied
+* get setup as pip package
+* create examples
+* setup some kind of automated build/testing
+
+##Tests
+Add tests for all methods, enhance them to make them better.
