@@ -2,7 +2,7 @@ import urllib2
 import json
 import urllib
 
-class api(object):
+class Client(object):
 
     def __init__(self, end_point="http://localhost:15672/api/",
             user_name="guest", password="guest"):
@@ -186,7 +186,7 @@ class api(object):
         pass
 
 if __name__ == "__main__":
-    mytest = api()
+    mytest = Client()
     print mytest.check_aliveness()
     #print mytest.get_overview()
     #print mytest.get_nodes()
