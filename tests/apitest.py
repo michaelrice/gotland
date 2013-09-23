@@ -73,6 +73,10 @@ class RabbitApiTests(unittest.TestCase):
                 exchange_name=self.rabbit.get_exchanges_vhost()[-1]["name"])
         self.assertIsInstance(exchange_dict, dict)
 
+    def test_get_bindings_for_exchange(self):
+        binding_list = self.rabbit.get_bindings_for_exchange(
+                exchange_name=self.rabbit.get_exchanges_vhost()[-1]["name"])
+        self.assertIsInstance(binding_list, list)
 
 def main():
     unittest.main()
