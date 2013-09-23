@@ -117,7 +117,7 @@ class Client(object):
     def get_exchanges_vhost(self,vhost="%2f"):
         """List of all exchanges on a given vhost"""
         path = self.end_point + "exchanges/{0}".format(vhost)
-        data = self._fetch(path)
+        data = self._fetch_data(path)
         return data
 
     def get_exchanges_name_vhost(self,vhost="%2f", exchange_name=None):

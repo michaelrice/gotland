@@ -7,7 +7,7 @@ from gotland.rabbit import api
 
 class RabbitApiTests(unittest.TestCase):
 
-    rabbit = api.api()
+    rabbit = api.Client()
 
     def test_aliveness(self):
         alive = self.rabbit.check_aliveness()
@@ -59,6 +59,20 @@ class RabbitApiTests(unittest.TestCase):
         channel_info_dict = self.rabbit.get_channels_name(
                 channel=self.rabbit.get_channels()[0]["name"])
         self.assertIsInstance(channel_info_dict, dict)
+
+    def test_get_exchanges(self):
+        exchange_list = self.rabbit.get_exchanges()
+        self.assertIsInstance(exchange_list,list)
+
+    def test_get_exchanges_by_vhost(self):
+        exchange_list = self.rabbit.get_exchanges_vhost()
+        self.assertIsInstance(exchange_list,list)
+
+    def test_get_exchanges_name_vhost(self):
+        exchange_dict = self.rabbit.get_exchanges_name_vhost(
+                exchange_name=self.rabbit.get_exchanges_vhost()[-1]["name"])
+        self.assertIsInstance(exchange_dict, dict)
+
 
 def main():
     unittest.main()
