@@ -5,7 +5,8 @@
 
 The following calls need to be implemented
 
- ~~* /api/bindings/vhost/e/exchange/q/queue/props~~
+~~* /api/bindings/vhost/e/exchange/q/queue/props~~
+
 ~~* /api/bindings/vhost/e/source/e/destination~~
 
 3. /api/bindings/vhost/e/source/e/destination/props
