@@ -206,6 +206,23 @@ class Client(object):
         path = path.format(vhost,exchange_name_s,exchange_name_s,stype)
         return self._fetch_data(path)
 
+    def get_vhosts(self):
+        """Return a list of all vhosts"""
+        path = self.end_point + "vhosts"
+        return self._fetch_data(path)
+
+    def get_vhost_by_name(self,vhost="%2f"):
+        """An individual virtual host. As a virtual host only has a name,
+        you do not need an HTTP body when PUTing one of these.
+        """
+        path = self.end_point + "vhosts/{0}".format(vhost)
+        return self._fetch_data(path)
+
+    def get_premissions_by_vhost(self,vhost="%2f"):
+        """A list of all permissions for a given virtual host."""
+        path = self.end_point + "vhosts/{0}/permissions".format(vhost)
+        return self._fetch_data(path)
+
 if __name__ == "__main__":
     mytest = Client()
     print mytest.check_aliveness()
