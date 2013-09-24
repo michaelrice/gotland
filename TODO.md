@@ -10,7 +10,7 @@ The following calls need to be implemented
 3. ~~/api/bindings/vhost/e/source/e/destination/props~~
 4. ~~/api/vhosts~~
 5. ~~/api/vhosts/name~~
-6. /api/vhosts/name/permissions
+6. ~~/api/vhosts/name/permissions~~
 7. /api/users
 8. /api/users/name
 9. /api/users/user/permissions
