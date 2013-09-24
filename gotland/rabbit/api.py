@@ -185,6 +185,27 @@ class Client(object):
         telling you the URI of your new binding."""
         pass
 
+    def get_binding_between_exchange_and_queue(self,queue_name=None,
+            exchange_name=None,vhost="%2f"):
+        """
+        An individual binding between an exchange and a queue. 
+        The props part of the URI is a "name" for the binding composed of 
+        its routing key and a hash of its arguments.
+        """
+        path = self.end_point + "bindings/{0}/e/{1}/q/{2}/props"
+        path = path.format(vhost,exchange_name,queue_name)
+        return self._fetch_data(path)
+
+    def get_bindings_between_exchanges(self,exchange_name_s=None,
+            exchange_name_d=None,vhost="%2f"):
+        """A list of all bindings between two exchanges. Similar to the list 
+        of all bindings between an exchange and a queue, above.
+        """
+        path = self.end_point + "bindings/{0}/e/{1}/e/{2}"
+        path = path.format(vhost,exchange_name_s,exchange_name_s)
+        return self._fetch_data(path)
+
+
 if __name__ == "__main__":
     mytest = Client()
     print mytest.check_aliveness()
