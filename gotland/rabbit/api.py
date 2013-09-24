@@ -197,14 +197,14 @@ class Client(object):
         return self._fetch_data(path)
 
     def get_bindings_between_exchanges(self,exchange_name_s=None,
-            exchange_name_d=None,vhost="%2f"):
+            exchange_name_d=None,stype="destination",vhost="%2f"):
         """A list of all bindings between two exchanges. Similar to the list 
         of all bindings between an exchange and a queue, above.
+        stype can be either "destination" or "props"
         """
-        path = self.end_point + "bindings/{0}/e/{1}/e/{2}"
-        path = path.format(vhost,exchange_name_s,exchange_name_s)
+        path = self.end_point + "bindings/{0}/e/{1}/e/{2}/{3}"
+        path = path.format(vhost,exchange_name_s,exchange_name_s,stype)
         return self._fetch_data(path)
-
 
 if __name__ == "__main__":
     mytest = Client()
