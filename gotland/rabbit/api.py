@@ -20,6 +20,9 @@ class Client(object):
         urllib2.install_opener(opener)
 
     def _fetch_data(self,path):
+        """Lots of work to do here. Literally doing the least possible
+        to just get something functional. Need to add error handling,
+        and raise proper exceptions"""
         data = None
         try:
             response = urllib2.urlopen(path)
@@ -221,6 +224,36 @@ class Client(object):
     def get_premissions_by_vhost(self,vhost="%2f"):
         """A list of all permissions for a given virtual host."""
         path = self.end_point + "vhosts/{0}/permissions".format(vhost)
+        return self._fetch_data(path)
+
+    def get_users(self):
+        """A list of all users"""
+        path = self.end_point + "users"
+        return self._fetch_data(path)
+
+    def get_user_by_name(self,username="guest"):
+        """Info about an individual user"""
+        path = self.end_point + "users/{0}".format(username)
+        return self._fetch_data(path)
+
+    def get_user_permissions(self,username="guest"):
+        """A list of all permissions for a given user."""
+        path = self.end_point + "users/{0}/permissions".format(username)
+        return self._fetch_data(path)
+
+    def whoami(self):
+        """Details of the currently authenticated user."""
+        path = self.end_point + "whoami"
+        return self._fetch_data(path)
+
+    def get_permissions(self):
+        """A list of all permissions for all users."""
+        path = self.end_point + "permissions"
+        return self._fetch_data(path)
+
+    def get_user_permissions_by_vhost(self,username="guest",vhost="%2f"):
+        """An individual permission of a user and virtual host."""
+        path = self.end_point + "permissions/{0}/{1}".format(vhost,username)
         return self._fetch_data(path)
 
 if __name__ == "__main__":
