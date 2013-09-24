@@ -2,10 +2,11 @@
 ##GET:
 
 
+
 The following calls need to be implemented
 
-~~1. /api/bindings/vhost/e/exchange/q/queue/props~~
-~~2. /api/bindings/vhost/e/source/e/destination~~
+~~ 1. /api/bindings/vhost/e/exchange/q/queue/props~~
+~~ 2. /api/bindings/vhost/e/source/e/destination~~
 3. /api/bindings/vhost/e/source/e/destination/props
 4. /api/vhosts
 5. /api/vhosts/name
