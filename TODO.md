@@ -17,8 +17,8 @@ The following calls need to be implemented
 10. ~~/api/whoami~~
 11. ~~/api/permissions~~
 12. ~~/api/permissions/vhost/user~~
-13. /api/parameters
-14. /api/parameters/component
+13. ~~/api/parameters~~
+14. ~~/api/parameters/component~~
 15. /api/parameters/component/vhost
 16. /api/parameters/component/vhost/name
 17. /api/policies

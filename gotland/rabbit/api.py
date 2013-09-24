@@ -191,8 +191,8 @@ class Client(object):
     def get_binding_between_exchange_and_queue(self,queue_name=None,
             exchange_name=None,vhost="%2f"):
         """
-        An individual binding between an exchange and a queue. 
-        The props part of the URI is a "name" for the binding composed of 
+        An individual binding between an exchange and a queue.
+        The props part of the URI is a "name" for the binding composed of
         its routing key and a hash of its arguments.
         """
         path = self.end_point + "bindings/{0}/e/{1}/q/{2}/props"
@@ -201,7 +201,7 @@ class Client(object):
 
     def get_bindings_between_exchanges(self,exchange_name_s=None,
             exchange_name_d=None,stype="destination",vhost="%2f"):
-        """A list of all bindings between two exchanges. Similar to the list 
+        """A list of all bindings between two exchanges. Similar to the list
         of all bindings between an exchange and a queue, above.
         stype can be either "destination" or "props"
         """
@@ -255,6 +255,17 @@ class Client(object):
         """An individual permission of a user and virtual host."""
         path = self.end_point + "permissions/{0}/{1}".format(vhost,username)
         return self._fetch_data(path)
+
+    def get_parameters(self):
+        """A list of all parameters."""
+        path = self.end_point + "parameters"
+        return self._fetch_data(path)
+
+    def get_parameters_by_component(self,component=None):
+        """A list of all parameters for a given component."""
+        path = self.end_point + "parameters/{0}".format(component)
+        return self._fetch_data(path)
+
 
 if __name__ == "__main__":
     mytest = Client()
