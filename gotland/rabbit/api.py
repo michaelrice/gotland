@@ -266,6 +266,34 @@ class Client(object):
         path = self.end_point + "parameters/{0}".format(component)
         return self._fetch_data(path)
 
+    def get_parameters_by_component_by_vhost(self, component=None,
+            vhost="%2f"):
+        """A list of all parameters for a given component and virtual host"""
+        path = self.end_point + "parameters/{1}/{0}".format(vhost,component)
+        return self._fetch_data(path)
+
+    def get_parameter_for_vhost_by_component_name(self,component=None,
+            parameter_name=None,vhost="%2f"):
+        """Get an individual parameter value from a given vhost & component"""
+        path = self.end_point + "parameters/{1}/{0}/{2}"
+        path = path.format(vhost,component,parameter_name)
+        return self._fetch_data(path)
+
+    def get_policies(self):
+        """A list of all policies"""
+        path = self.end_point + "policies"
+        return self._fetch_data(path)
+
+    def get_policies_by_vhost(self,vhost="%2f"):
+        """A list of all policies in a given virtual host."""
+        path = self.end_point + "policies/{0}".format(vhost)
+        return self._fetch_data(path)
+
+    def get_policy_for_vhost_by_name(self, name=None, vhost="%2f"):
+        """Information about an individual policy"""
+        path = self.end_point + "policies/{0}/{1}".format(vhost,name)
+        return self._fetch_data(path)
+
 
 if __name__ == "__main__":
     mytest = Client()

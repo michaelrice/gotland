@@ -19,11 +19,11 @@ The following calls need to be implemented
 12. ~~/api/permissions/vhost/user~~
 13. ~~/api/parameters~~
 14. ~~/api/parameters/component~~
-15. /api/parameters/component/vhost
-16. /api/parameters/component/vhost/name
-17. /api/policies
-18. /api/policies/vhost
-19. /api/policies/vhost/name
+15. ~~/api/parameters/component/vhost~~
+16. ~~/api/parameters/component/vhost/name~~
+17. ~~/api/policies~~
+18. ~~/api/policies/vhost~~
+19. ~~/api/policies/vhost/name~~
 
 
 #PUT:
