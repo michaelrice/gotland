@@ -19,7 +19,7 @@ class Client(object):
         opener = urllib2.build_opener(authhandler)
         urllib2.install_opener(opener)
 
-    def _fetch_data(self,path):
+    def _get_data(self,path):
         """Lots of work to do here. Literally doing the least possible
         to just get something functional. Need to add error handling,
         and raise proper exceptions"""
@@ -39,7 +39,7 @@ class Client(object):
             handle_down_event()
         """
         path = self.end_point + "aliveness-test/" + vhost
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         if data is None:
             return False
         try:
@@ -53,13 +53,13 @@ class Client(object):
         """Various random bits of information that describe the
         whole system."""
         path = self.end_point + "overview"
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_nodes(self):
         """A list of nodes in the RabbitMQ cluster."""
         path = self.end_point + "nodes"
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_node_info(self,node_name, get_memory=False):
@@ -70,26 +70,26 @@ class Client(object):
             vals = {"memory": "true"}
             data = urllib.urlencode(vals)
             path = path + '?' + data
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_extensions(self):
         """A list of extensions to the management plugin"""
         path = self.end_point + "extensions"
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_connections(self):
         """A list of all open connections."""
         path = self.end_point + "connections"
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_connections_name(self,name):
         """Gets info for an individual connection"""
         name = urllib.quote(name)
         path = self.end_point + "connections/{0}".format(name)
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def delete_connection(self,name=None,reason=None):
@@ -101,72 +101,72 @@ class Client(object):
     def get_channels(self):
         """List of all channels"""
         path = self.end_point + "channels"
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_channels_name(self, channel=None):
         """Info about a specific channel"""
         channel = urllib.quote(channel)
         path = self.end_point + "channels/{0}".format(channel)
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_exchanges(self):
         """List of all exchanges"""
         path = self.end_point + "exchanges"
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_exchanges_vhost(self,vhost="%2f"):
         """List of all exchanges on a given vhost"""
         path = self.end_point + "exchanges/{0}".format(vhost)
-        data = self._fetch_data(path)
+        data = self._get_data(path)
         return data
 
     def get_exchanges_name_vhost(self,vhost="%2f", exchange_name=None):
         """Gets info about a given echange (name) on a given vhost"""
         path = self.end_point + "exchanges/{0}/{1}".format(vhost,exchange_name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_bindings_for_exchange(self,vhost="%2f",exchange_name=None,
             stype="source"):
         """A list of all bindings in which a given exchange is the source."""
         path = self.end_point + "exchanges/{0}/{1}/bindings/{2}"
         path = path.format(vhost,exchange_name,stype)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_queues(self):
         """A list of all queues on the server"""
         path = self.end_point + "queues"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_queues_by_vhost(self,vhost="%2f"):
         """A list of all queues in a given virtual host."""
         path = self.end_point + "queues/{0}".format(vhost)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_queue_by_name(self,queue_name=None,vhost="%2f"):
         """Inforation about an individual queue. Takes optional vhost param
         Checks / as the default vhost"""
         path = self.end_point + "queues/{0}/{1}".format(vhost,queue_name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_bindings_by_queue(self,queue_name=None,vhost="%2f"):
         """A list of all bindings on a given queue. Takes an optional
         vhost param. The default vhost is /"""
         path = self.end_point + "queues/{0}/{1}/bindings"
         path = path.format(vhost,queue_name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_bindings(self):
         """A list of all bindings."""
         path = self.end_point + "bindings"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_bindings_by_vhost(self,vhost="%2f"):
         """A list of all bindings in a given virtual host."""
         path =  self.end_point + "bindings/{0}".format(vhost)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_bindings_between_exchange_and_queue(self,queue_name=None,
             exchange_name=None,vhost=None):
@@ -175,7 +175,7 @@ class Client(object):
         """
         path = self.end_point + "bindings/{0}/e/{1}/q/{2}"
         path = path.format(vhost,exchange_name,queue_name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def update_bindings_between_exchange_and_queue(self):
         """A list of all bindings between an exchange and a queue.
@@ -197,7 +197,7 @@ class Client(object):
         """
         path = self.end_point + "bindings/{0}/e/{1}/q/{2}/props"
         path = path.format(vhost,exchange_name,queue_name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_bindings_between_exchanges(self,exchange_name_s=None,
             exchange_name_d=None,stype="destination",vhost="%2f"):
@@ -207,92 +207,92 @@ class Client(object):
         """
         path = self.end_point + "bindings/{0}/e/{1}/e/{2}/{3}"
         path = path.format(vhost,exchange_name_s,exchange_name_s,stype)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_vhosts(self):
         """Return a list of all vhosts"""
         path = self.end_point + "vhosts"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_vhost_by_name(self,vhost="%2f"):
         """An individual virtual host. As a virtual host only has a name,
         you do not need an HTTP body when PUTing one of these.
         """
         path = self.end_point + "vhosts/{0}".format(vhost)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_premissions_by_vhost(self,vhost="%2f"):
         """A list of all permissions for a given virtual host."""
         path = self.end_point + "vhosts/{0}/permissions".format(vhost)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_users(self):
         """A list of all users"""
         path = self.end_point + "users"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_user_by_name(self,username="guest"):
         """Info about an individual user"""
         path = self.end_point + "users/{0}".format(username)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_user_permissions(self,username="guest"):
         """A list of all permissions for a given user."""
         path = self.end_point + "users/{0}/permissions".format(username)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def whoami(self):
         """Details of the currently authenticated user."""
         path = self.end_point + "whoami"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_permissions(self):
         """A list of all permissions for all users."""
         path = self.end_point + "permissions"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_user_permissions_by_vhost(self,username="guest",vhost="%2f"):
         """An individual permission of a user and virtual host."""
         path = self.end_point + "permissions/{0}/{1}".format(vhost,username)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_parameters(self):
         """A list of all parameters."""
         path = self.end_point + "parameters"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_parameters_by_component(self,component=None):
         """A list of all parameters for a given component."""
         path = self.end_point + "parameters/{0}".format(component)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_parameters_by_component_by_vhost(self, component=None,
             vhost="%2f"):
         """A list of all parameters for a given component and virtual host"""
         path = self.end_point + "parameters/{1}/{0}".format(vhost,component)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_parameter_for_vhost_by_component_name(self,component=None,
             parameter_name=None,vhost="%2f"):
         """Get an individual parameter value from a given vhost & component"""
         path = self.end_point + "parameters/{1}/{0}/{2}"
         path = path.format(vhost,component,parameter_name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_policies(self):
         """A list of all policies"""
         path = self.end_point + "policies"
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_policies_by_vhost(self,vhost="%2f"):
         """A list of all policies in a given virtual host."""
         path = self.end_point + "policies/{0}".format(vhost)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
     def get_policy_for_vhost_by_name(self, name=None, vhost="%2f"):
         """Information about an individual policy"""
         path = self.end_point + "policies/{0}/{1}".format(vhost,name)
-        return self._fetch_data(path)
+        return self._get_data(path)
 
 
 if __name__ == "__main__":
