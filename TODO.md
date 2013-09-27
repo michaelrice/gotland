@@ -30,11 +30,11 @@ The following calls need to be implemented
 
 The following PUT methods need to be implemented
 
-1. /api/exchanges/vhost/name
-2. /api/queues/vhost/name
-3. /api/vhosts/name
-4. /api/users/name
-5. /api/permissions/vhost/user
+1. ~~/api/exchanges/vhost/name~~
+2. ~~/api/queues/vhost/name~~
+3. ~~/api/vhosts/name~~
+4. ~~/api/users/name~~
+5. ~~/api/permissions/vhost/user~~
 6. /api/parameters/component/vhost/name
 7. /api/policies/vhost/name
 

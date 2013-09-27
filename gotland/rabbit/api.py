@@ -31,6 +31,17 @@ class Client(object):
             pass
         return data
 
+    def _send_data(self,path,data=None,request_type='PUT'):
+        response_data = None
+        try:
+            request = urllib2.Request(path, data=data)
+            request.get_method = lambda: request_type
+            response = urllib2.urlopen(request)
+            response_data = json.loads(response.read())
+        except:
+            pass
+        return response_data
+
     def check_aliveness(self, vhost="%2f"):
         """Check aliveness of a given vhost. By default / will be checked.
         Usage::
@@ -293,6 +304,92 @@ class Client(object):
         """Information about an individual policy"""
         path = self.end_point + "policies/{0}/{1}".format(vhost,name)
         return self._get_data(path)
+
+    def create_exchange_on_vhost(self,exchange_name=None,
+            body={},vhost="%2f"):
+        """An individual exchange. To PUT an exchange, you will need a body 
+        looking something like this:
+        {
+            "type":"direct",
+            "auto_delete":false,
+            "durable":true,
+            "internal":false,
+            "name": "mytest",
+            "arguments":[]
+        }
+        """
+        path = self.end_point + "exchanges/{0}/{1}".format(vhost,exchange_name)
+        return self._send_data(path,data=body)
+
+    def create_queue_on_vhost(self,queue_name=None,body={},vhost="%2f"):
+        """An individual queue. To PUT a queue, you will need a body looking 
+        something like this:
+        {
+            "auto_delete":false,
+            "durable":true,
+            "arguments":[],
+            "node":"rabbit@localnode-1"
+        }
+        /api/queues/vhost/name
+        """
+        path = self.end_point + "queues/{0}/{1}".format(vhost,queue_name)
+        return self._send_data(path,data=body)
+
+    def create_vhost(self,vhost=None):
+        """An individual virtual host. As a virtual host only has a name, 
+        you do not need an HTTP body when PUTing one of these."""
+        path = self.end_point + "vhosts/{0}".format(vhost)
+        return self._send_data(path)
+
+    def create_user(self,username,body={}):
+        """An individual user. To PUT a user, you will need a body looking 
+        something like this:
+        {
+            "password":"secret",
+            "tags":"administrator"
+        }
+        
+        or:
+        
+        {
+            "password_hash":"2lmoth8l4H0DViLaK9Fxi6l9ds8=", 
+            "tags":"administrator"
+        }
+        
+        The tags key is mandatory. Either password or password_hash must be 
+        set. Setting password_hash to "" will ensure the user cannot use a 
+        password to log in. tags is a comma-separated list of tags for the 
+        user. Currently recognised tags are "administrator", "monitoring" 
+        and "management".
+        """
+        path = self.end_point + "users/{0}".format(username)
+        return self._send_data(path,data=body)
+
+    def grant_permissions_on_vhost(self,body={},username=None,
+            vhost="%2f"):
+        """An individual permission of a user and virtual host. To PUT a 
+        permission, you will need a body looking something like this:
+        {
+            "configure":".*",
+            "write":".*",
+            "read":".*"
+        }
+        All keys are mandatory.
+        """
+        path = self.end_point + "permissions/{0}/{1}".format(vhost,username)
+        return self._send_data(path,data=body)
+
+    def update_parameter(self,component=None,body={},vhost="%2f"):
+        """An individual parameter. To PUT a parameter, you will need a body 
+        looking something like this:
+        {
+            "vhost": "/",
+            "component":"federation",
+            "name":"local_username",
+            "value":"guest"
+        }
+        """
+        pass
 
 
 if __name__ == "__main__":
