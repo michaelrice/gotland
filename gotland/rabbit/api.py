@@ -5,16 +5,16 @@ import urllib
 class Client(object):
 
     def __init__(self, end_point="http://localhost:15672/api/",
-            user_name="guest", password="guest"):
+            username="guest", password="guest"):
         """Client connection info for the rabbitmq_management API
 
         Usage::
-        myapi = api(user_name="sam",password="secure")
+        myapi = api(username="sam",password="secure")
 
         """
         self.end_point = end_point
         passmgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-        passmgr.add_password(None, end_point, user_name, password)
+        passmgr.add_password(None, end_point, username, password)
         authhandler = urllib2.HTTPBasicAuthHandler(passmgr)
         opener = urllib2.build_opener(authhandler)
         urllib2.install_opener(opener)
@@ -33,8 +33,13 @@ class Client(object):
 
     def _send_data(self,path,data=None,request_type='PUT'):
         response_data = None
+        data = json.dumps(data)
+        if data == 'null':
+            data = None
+        headers = {"Content-type":"application/json",
+                "Accept":"application/json"}
         try:
-            request = urllib2.Request(path, data=data)
+            request = urllib2.Request(path, data=data,headers=headers)
             request.get_method = lambda: request_type
             response = urllib2.urlopen(request)
             response_data = json.loads(response.read())
@@ -409,4 +414,6 @@ if __name__ == "__main__":
     #        stype="destination")
     #print mytest.get_queues()
     #print mytest.get_queues_vhost()
-    print mytest.get_queue_name_vhost(queue_name="aliveness-test")
+    print mytest.get_queue_by_name(queue_name="aliveness-test")
+    #print mytest.create_user("mike",{"password":"poop","tags":"administrator"})
+    #print mytest.create_user("mike",{})
