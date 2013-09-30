@@ -108,12 +108,6 @@ class Client(object):
         data = self._get_data(path)
         return data
 
-    def delete_connection(self,name=None,reason=None):
-        """Removes a connection by name, with an optional reason"""
-        pass
-        #path = self.end_point + "connections/" + name
-        #return data
-
     def get_channels(self):
         """List of all channels"""
         path = self.end_point + "channels"
@@ -312,7 +306,7 @@ class Client(object):
 
     def create_exchange_on_vhost(self,exchange_name=None,
             body={},vhost="%2f"):
-        """An individual exchange. To PUT an exchange, you will need a body 
+        """An individual exchange. To PUT an exchange, you will need a body
         looking something like this:
         {
             "type":"direct",
@@ -327,7 +321,7 @@ class Client(object):
         return self._send_data(path,data=body)
 
     def create_queue_on_vhost(self,queue_name=None,body={},vhost="%2f"):
-        """An individual queue. To PUT a queue, you will need a body looking 
+        """An individual queue. To PUT a queue, you will need a body looking
         something like this:
         {
             "auto_delete":false,
@@ -335,36 +329,35 @@ class Client(object):
             "arguments":[],
             "node":"rabbit@localnode-1"
         }
-        /api/queues/vhost/name
         """
         path = self.end_point + "queues/{0}/{1}".format(vhost,queue_name)
         return self._send_data(path,data=body)
 
     def create_vhost(self,vhost=None):
-        """An individual virtual host. As a virtual host only has a name, 
+        """An individual virtual host. As a virtual host only has a name,
         you do not need an HTTP body when PUTing one of these."""
         path = self.end_point + "vhosts/{0}".format(vhost)
         return self._send_data(path)
 
     def create_user(self,username,body={}):
-        """An individual user. To PUT a user, you will need a body looking 
+        """An individual user. To PUT a user, you will need a body looking
         something like this:
         {
             "password":"secret",
             "tags":"administrator"
         }
-        
+
         or:
-        
+
         {
-            "password_hash":"2lmoth8l4H0DViLaK9Fxi6l9ds8=", 
+            "password_hash":"2lmoth8l4H0DViLaK9Fxi6l9ds8=",
             "tags":"administrator"
         }
-        
-        The tags key is mandatory. Either password or password_hash must be 
-        set. Setting password_hash to "" will ensure the user cannot use a 
-        password to log in. tags is a comma-separated list of tags for the 
-        user. Currently recognised tags are "administrator", "monitoring" 
+
+        The tags key is mandatory. Either password or password_hash must be
+        set. Setting password_hash to "" will ensure the user cannot use a
+        password to log in. tags is a comma-separated list of tags for the
+        user. Currently recognised tags are "administrator", "monitoring"
         and "management".
         """
         path = self.end_point + "users/{0}".format(username)
@@ -372,7 +365,7 @@ class Client(object):
 
     def grant_permissions_on_vhost(self,body={},username=None,
             vhost="%2f"):
-        """An individual permission of a user and virtual host. To PUT a 
+        """An individual permission of a user and virtual host. To PUT a
         permission, you will need a body looking something like this:
         {
             "configure":".*",
@@ -384,8 +377,9 @@ class Client(object):
         path = self.end_point + "permissions/{0}/{1}".format(vhost,username)
         return self._send_data(path,data=body)
 
-    def update_parameter(self,component=None,body={},vhost="%2f"):
-        """An individual parameter. To PUT a parameter, you will need a body 
+    def update_parameter(self,component=None,body={},parameter_name=None,
+            vhost="%2f"):
+        """An individual parameter. To PUT a parameter, you will need a body
         looking something like this:
         {
             "vhost": "/",
@@ -394,7 +388,28 @@ class Client(object):
             "value":"guest"
         }
         """
+        path = "parameters/{1}/{0}/{2}".format(vhost,component,parameter_name)
+        return self._send_data(path,data=body)
+
+    def update_policies(self,policy_name=None,vhost="%2f"):
+        """An individual policy. To PUT a policy, you will need a body
+        looking something like this:
+        {
+            "pattern":"^amq.",
+            "definition": {
+                "federation-upstream-set":"all"
+            },
+            "priority":0
+        }
+        policies/vhost/name
+        """
         pass
+
+    def delete_connection(self,name=None,reason=None):
+        """Removes a connection by name, with an optional reason"""
+        pass
+        #path = self.end_point + "connections/" + name
+        #return data
 
 
 if __name__ == "__main__":
