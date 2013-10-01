@@ -391,7 +391,7 @@ class Client(object):
         path = "parameters/{1}/{0}/{2}".format(vhost,component,parameter_name)
         return self._send_data(path,data=body)
 
-    def update_policies(self,policy_name=None,vhost="%2f"):
+    def update_policies(self,policy_name=None,body={},vhost="%2f"):
         """An individual policy. To PUT a policy, you will need a body
         looking something like this:
         {
@@ -403,7 +403,9 @@ class Client(object):
         }
         policies/vhost/name
         """
-        pass
+        path = self.end_point + "policies/{0}/{1}".format(vhost,policy_name)
+        return self._send_data(path,data=body)
+
 
     def delete_connection(self,name=None,reason=None):
         """Removes a connection by name, with an optional reason"""
