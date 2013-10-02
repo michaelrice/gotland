@@ -407,11 +407,29 @@ class Client(object):
         return self._send_data(path,data=body)
 
 
+
     def delete_connection(self,name=None,reason=None):
         """Removes a connection by name, with an optional reason"""
-        pass
-        #path = self.end_point + "connections/" + name
-        #return data
+        path = self.end_point + "connections/" + name
+        self._send_data(path,request_type='DELETE')
+
+    def delete_exchange(self,exchange_name=None,vhost="%2f"):
+        """Delete an exchange from a vhost"""
+        path = self.end_point + "exchanges/{0}/{1}".format(vhost,exchange_name)
+        self._send_data(path,request_type='DELETE')
+
+    def delete_queue(self,queue_name=None,vhost="%2f"):
+        """Delete a queue from a vhost"""
+        path = self.end_point + "queues/{0}/{1}".format(vhost,queue_name)
+        self._send_data(path,request_type='DELETE')
+
+    def delete_contents_from_queue(self,queue_name=None,vhost="%2f"):
+        """Delete the contents of a queue. If no vhost name is given the
+        defult / will be used"""
+        path = self.end_point + "queues/{0}/{1}/contents"
+        path = path.format(vhost,queue_name)
+        self._send_data(path,request_type='DELETE')
+
 
 
 if __name__ == "__main__":
