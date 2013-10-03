@@ -430,6 +430,15 @@ class Client(object):
         path = path.format(vhost,queue_name)
         self._send_data(path,request_type='DELETE')
 
+    #def delete_thing(self):
+    #    """An individual binding between an exchange and a queue. The props
+    #    part of the URI is a "name" for the binding composed of its routing
+    #    key and a hash of its arguments."""
+
+    def delete_vhost(self,vhost=None):
+        """Delete a given vhost"""
+        path = self.end_point + "vhosts/{0}".format(vhost)
+        self._send_data(path,request_type='DELETE')
 
 
 if __name__ == "__main__":
