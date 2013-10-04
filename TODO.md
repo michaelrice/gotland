@@ -48,8 +48,8 @@ The following DELETE methods need to be implemented
 4. ~~/api/queues/vhost/name/contents~~
 5. /api/bindings/vhost/e/exchange/q/queue/props
 6. /api/bindings/vhost/e/source/e/destination/props
-7. /api/vhosts/name
-8. /api/users/name
+7. ~~/api/vhosts/name~~
+8. ~~/api/users/name~~
 9. /api/permissions/vhost/user
 10. /api/parameters/component/vhost/name
 11. /api/policies/vhost/name

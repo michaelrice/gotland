@@ -440,6 +440,11 @@ class Client(object):
         path = self.end_point + "vhosts/{0}".format(vhost)
         self._send_data(path,request_type='DELETE')
 
+    def delete_user(self,user=None):
+        """Delete a given user"""
+        path = self.end_point + "users/{0}".format(user)
+        self._send_data(path,request_type='DELETE')
+
 
 if __name__ == "__main__":
     mytest = Client()
