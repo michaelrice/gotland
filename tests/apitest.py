@@ -78,6 +78,10 @@ class RabbitApiTests(unittest.TestCase):
                 exchange_name=self.rabbit.get_exchanges_vhost()[-1]["name"])
         self.assertIsInstance(binding_list, list)
 
+    def test_get_queues(self):
+        queues = self.rabbit.get_queues()
+        self.assertIsInstance(queues, list)
+
 def main():
     unittest.main()
 
