@@ -82,6 +82,15 @@ class RabbitApiTests(unittest.TestCase):
         queues = self.rabbit.get_queues()
         self.assertIsInstance(queues, list)
 
+    def test_get_queues_by_vhost(self):
+        queues = self.rabbit.get_queues_by_vhost()
+        self.assertIsInstance(queues, list)
+
+    def test_get_queue_by_name(self):
+        qname = self.rabbit.get_queues_by_vhost()[0]["name"]
+        queue = self.rabbit.get_queue_by_name(queue_name=qname)
+        self.assertIsInstance(queue, dict)
+
 def main():
     unittest.main()
 
