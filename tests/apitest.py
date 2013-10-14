@@ -91,6 +91,11 @@ class RabbitApiTests(unittest.TestCase):
         queue = self.rabbit.get_queue_by_name(queue_name=qname)
         self.assertIsInstance(queue, dict)
 
+    def test_get_bindings_by_queue(self):
+        qname = self.rabbit.get_queues_by_vhost()[0]["name"]
+        bindings = self.rabbit.get_bindings_by_queue(queue_name=qname)
+        self.assertIsInstance(bindings, list)
+
 def main():
     unittest.main()
 
