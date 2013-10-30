@@ -217,7 +217,7 @@ class Client(object):
         stype can be either "destination" or "props"
         """
         path = self.end_point + "bindings/{0}/e/{1}/e/{2}/{3}"
-        path = path.format(vhost, exchange_name_s, exchange_name_s, stype)
+        path = path.format(vhost, exchange_name_s, exchange_name_d, stype)
         return self._get_data(path)
 
     def get_vhosts(self):
