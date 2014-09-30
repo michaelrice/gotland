@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import json
 import urllib
 
@@ -18,11 +20,16 @@ class Client(object):
         self.end_point = end_point
         self.auth = HTTPBasicAuth(username, password)
 
-    def _get_data(self, path):
+    def _get_data(self, path, **kwargs):
         """Lots of work to do here. Literally doing the least possible
         to just get something functional. Need to add error handling,
         and raise proper exceptions"""
-        response = requests.get(path, auth=self.auth)
+        params = None
+        if 'params' in kwargs:
+            params = kwargs.get("params")
+        response = requests.get(path, auth=self.auth, params=params)
+        if response.status_code != 200:
+            return
         return response.json()
 
     def _send_data(self, path, data=None, request_type='PUT'):
@@ -78,11 +85,11 @@ class Client(object):
         """An individual node in the RabbitMQ cluster. Add "get_memory=true"
         to get memory statistics."""
         path = self.end_point + "nodes/" + node_name
+        params = None
         if get_memory:
-            vals = {"memory": "true"}
-            data = urllib.urlencode(vals)
-            path = path + '?' + data
-        data = self._get_data(path)
+            params = {"memory": "true"}
+
+        data = self._get_data(path, params=params)
         return data
 
     def get_extensions(self):
@@ -438,25 +445,3 @@ class Client(object):
         """Delete a given user"""
         path = self.end_point + "users/{0}".format(user)
         self._send_data(path, request_type='DELETE')
-
-
-if __name__ == "__main__":
-    mytest = Client()
-    print mytest.check_aliveness()
-    #print mytest.get_overview()
-    #print mytest.get_nodes()
-    #print mytest.get_node_info((mytest.get_nodes()[0]).get("name"),
-    #                             get_memory=True)
-    #print mytest.get_extensions()
-    #print (mytest.get_connections()[0]).get("name")
-    #print mytest.get_channels()
-    #print mytest.get_exchanges()
-    #print mytest.get_exchanges_name_vhost(exchange_name="amq.rabbitmq.trace")
-    #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace")
-    #print mytest.get_bindings_for_exchange(exchange_name="amq.rabbitmq.trace",
-    #        stype="destination")
-    #print mytest.get_queues()
-    #print mytest.get_queues_vhost()
-    print mytest.get_queue_by_name(queue_name="aliveness-test")
-    #print mytest.create_user("mike",{"password":"poop","tags":"administrator"})
-    #print mytest.create_user("mike",{})

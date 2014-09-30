@@ -10,12 +10,37 @@ interactions:
     method: GET
     uri: http://localhost:55672/api/connections
   response:
-    body: {string: !!python/unicode '[]'}
+    body: {string: !!python/unicode '[{"recv_oct":355,"recv_cnt":4,"send_oct":384,"send_cnt":4,"send_pend":0,"state":"running","channels":1,"recv_oct_details":{"rate":0,"interval":10897244,"last_event":1412070595909},"send_oct_details":{"rate":0,"interval":10897244,"last_event":1412070595909},"name":"10.0.2.2:54838","type":"network","node":"rabbit@precise64","address":"10.0.2.15","port":5672,"peer_address":"10.0.2.2","peer_port":54838,"ssl":false,"peer_cert_subject":"","peer_cert_issuer":"","peer_cert_validity":"","auth_mechanism":"PLAIN","ssl_protocol":"","ssl_key_exchange":"","ssl_cipher":"","ssl_hash":"","protocol":"AMQP
+        0-9-1","user":"guest","vhost":"/","timeout":0,"frame_max":131072,"client_properties":{"platform":"Python
+        2.7.8","product":"Pika Python Client Library","version":"0.9.14","capabilities":{"connection.blocked":true,"authentication_failure_close":true,"consumer_cancel_notify":true,"publisher_confirms":true,"basic.nack":true},"information":"See
+        http://pika.rtfd.org"}}]'}
     headers:
       cache-control: [no-cache]
-      content-length: ['2']
+      content-length: ['961']
       content-type: [application/json]
-      date: ['Tue, 30 Sep 2014 04:11:41 GMT']
+      date: ['Tue, 30 Sep 2014 19:09:57 GMT']
+      server: [MochiWeb/1.1 WebMachine/1.7 (participate in the frantic)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Z3Vlc3Q6Z3Vlc3Q=]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.4.1 CPython/2.7.8 Darwin/13.4.0]
+    method: GET
+    uri: http://localhost:55672/api/connections/10.0.2.2%3A54838
+  response:
+    body: {string: !!python/unicode '{"recv_oct":355,"recv_cnt":4,"send_oct":384,"send_cnt":4,"send_pend":0,"state":"running","channels":1,"recv_oct_details":{"rate":0,"interval":10897244,"last_event":1412070595909},"send_oct_details":{"rate":0,"interval":10897244,"last_event":1412070595909},"name":"10.0.2.2:54838","type":"network","node":"rabbit@precise64","address":"10.0.2.15","port":5672,"peer_address":"10.0.2.2","peer_port":54838,"ssl":false,"peer_cert_subject":"","peer_cert_issuer":"","peer_cert_validity":"","auth_mechanism":"PLAIN","ssl_protocol":"","ssl_key_exchange":"","ssl_cipher":"","ssl_hash":"","protocol":"AMQP
+        0-9-1","user":"guest","vhost":"/","timeout":0,"frame_max":131072,"client_properties":{"platform":"Python
+        2.7.8","product":"Pika Python Client Library","version":"0.9.14","capabilities":{"connection.blocked":true,"authentication_failure_close":true,"consumer_cancel_notify":true,"publisher_confirms":true,"basic.nack":true},"information":"See
+        http://pika.rtfd.org"}}'}
+    headers:
+      cache-control: [no-cache]
+      content-length: ['959']
+      content-type: [application/json]
+      date: ['Tue, 30 Sep 2014 19:09:57 GMT']
       server: [MochiWeb/1.1 WebMachine/1.7 (participate in the frantic)]
     status: {code: 200, message: OK}
 version: 1
