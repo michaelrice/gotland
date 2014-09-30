@@ -28,7 +28,7 @@ with open('test-requirements.txt') as f:
 setup(
     name='gotland',
     version='0.1-DEVELOPMENT',
-    description='Tool that uses Thundercloud and pyVmomi to create rules in vCloud Usage Meter',
+    description='python bindings to the rabbitmq web based REST api',
     long_description=read('README.md'),
     packages=['gotland'],
     url='https://github.com/michaelrice/gotland',
