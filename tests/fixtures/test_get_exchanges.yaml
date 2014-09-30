@@ -1,0 +1,21 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Z3Vlc3Q6Z3Vlc3Q=]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.4.1 CPython/2.7.8 Darwin/13.4.0]
+    method: GET
+    uri: http://localhost:55672/api/exchanges
+  response:
+    body: {string: !!python/unicode '[{"name":"","vhost":"/","type":"direct","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.direct","vhost":"/","type":"direct","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.fanout","vhost":"/","type":"fanout","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.headers","vhost":"/","type":"headers","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.match","vhost":"/","type":"headers","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.rabbitmq.log","vhost":"/","type":"topic","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.rabbitmq.trace","vhost":"/","type":"topic","durable":true,"auto_delete":false,"internal":false,"arguments":{}},{"name":"amq.topic","vhost":"/","type":"topic","durable":true,"auto_delete":false,"internal":false,"arguments":{}}]'}
+    headers:
+      cache-control: [no-cache]
+      content-length: ['939']
+      content-type: [application/json]
+      date: ['Tue, 30 Sep 2014 04:11:41 GMT']
+      server: [MochiWeb/1.1 WebMachine/1.7 (participate in the frantic)]
+    status: {code: 200, message: OK}
+version: 1

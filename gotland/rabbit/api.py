@@ -1,12 +1,14 @@
-import urllib2
 import json
 import urllib
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 
 class Client(object):
 
     def __init__(self, end_point="http://localhost:15672/api/",
-            username="guest", password="guest"):
+                 username="guest", password="guest"):
         """Client connection info for the rabbitmq_management API
 
         Usage::
@@ -14,39 +16,32 @@ class Client(object):
 
         """
         self.end_point = end_point
-        passmgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-        passmgr.add_password(None, end_point, username, password)
-        authhandler = urllib2.HTTPBasicAuthHandler(passmgr)
-        opener = urllib2.build_opener(authhandler)
-        urllib2.install_opener(opener)
+        self.auth = HTTPBasicAuth(username, password)
 
     def _get_data(self, path):
         """Lots of work to do here. Literally doing the least possible
         to just get something functional. Need to add error handling,
         and raise proper exceptions"""
-        data = None
-        try:
-            response = urllib2.urlopen(path)
-            data = json.loads(response.read())
-        except:
-            pass
-        return data
+        response = requests.get(path, auth=self.auth)
+        return response.json()
 
     def _send_data(self, path, data=None, request_type='PUT'):
-        response_data = None
         data = json.dumps(data)
         if data == 'null':
             data = None
-        headers = {"Content-type":"application/json",
-                "Accept":"application/json"}
-        try:
-            request = urllib2.Request(path, data=data, headers=headers)
-            request.get_method = lambda: request_type
-            response = urllib2.urlopen(request)
-            response_data = json.loads(response.read())
-        except:
-            pass
-        return response_data
+        headers = {
+            "Content-type": "application/json",
+            "Accept": "application/json"
+        }
+        if request_type is 'PUT':
+            response = requests.put(path, data, headers=headers, auth=self.auth)
+        elif request_type is 'DELETE':
+            response = requests.delete(path, auth=self.auth, headers=headers,
+                                       data=data)
+        else:
+            response = requests.post(path, data=data, headers=headers,
+                                     auth=self.auth)
+        return response.json()
 
     def check_aliveness(self, vhost="%2f"):
         """Check aliveness of a given vhost. By default / will be checked.

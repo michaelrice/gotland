@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Z3Vlc3Q6Z3Vlc3Q=]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.4.1 CPython/2.7.8 Darwin/13.4.0]
+    method: GET
+    uri: http://localhost:55672/api/nodes
+  response:
+    body: {string: !!python/unicode '[{"name":"rabbit@precise64","type":"disc","running":true,"os_pid":"861","mem_ets":1077032,"mem_binary":135448,"mem_proc":12534576,"mem_proc_used":12509752,"mem_atom":1336577,"mem_atom_used":1313611,"mem_code":14301212,"fd_used":23,"fd_total":1024,"sockets_used":1,"sockets_total":829,"mem_used":31134792,"mem_limit":153295257,"mem_alarm":false,"proc_used":171,"proc_total":1048576,"statistics_level":"fine","erlang_version":"R14B04","uptime":2893890,"run_queue":0,"processors":2,"exchange_types":[{"name":"topic","description":"AMQP
+        topic exchange, as per the AMQP specification","enabled":true},{"name":"fanout","description":"AMQP
+        fanout exchange, as per the AMQP specification","enabled":true},{"name":"direct","description":"AMQP
+        direct exchange, as per the AMQP specification","enabled":true},{"name":"headers","description":"AMQP
+        headers exchange, as per the AMQP specification","enabled":true}],"auth_mechanisms":[{"name":"PLAIN","description":"SASL
+        PLAIN authentication mechanism","enabled":true},{"name":"AMQPLAIN","description":"QPid
+        AMQPLAIN mechanism","enabled":true},{"name":"RABBIT-CR-DEMO","description":"RabbitMQ
+        Demo challenge-response authentication mechanism","enabled":false}],"applications":[{"name":"amqp_client","description":"RabbitMQ
+        AMQP Client","version":"0.0.0"},{"name":"inets","description":"INETS  CXC
+        138 49","version":"5.7.1"},{"name":"kernel","description":"ERTS  CXC 138 10","version":"2.14.5"},{"name":"mnesia","description":"MNESIA  CXC
+        138 12","version":"4.5"},{"name":"mochiweb","description":"MochiMedia Web
+        Server","version":"1.3-rmq0.0.0-git"},{"name":"os_mon","description":"CPO  CXC
+        138 46","version":"2.2.7"},{"name":"rabbit","description":"RabbitMQ","version":"2.7.1"},{"name":"rabbitmq_management","description":"RabbitMQ
+        Management Console","version":"0.0.0"},{"name":"rabbitmq_management_agent","description":"RabbitMQ
+        Management Agent","version":"0.0.0"},{"name":"rabbitmq_mochiweb","description":"RabbitMQ
+        Mochiweb Embedding","version":"0.0.0"},{"name":"sasl","description":"SASL  CXC
+        138 11","version":"2.1.10"},{"name":"stdlib","description":"ERTS  CXC 138
+        10","version":"1.17.5"},{"name":"webmachine","description":"webmachine","version":"1.7.0-rmq0.0.0-hg"}]}]'}
+    headers:
+      cache-control: [no-cache]
+      content-length: ['2215']
+      content-type: [application/json]
+      date: ['Tue, 30 Sep 2014 04:11:41 GMT']
+      server: [MochiWeb/1.1 WebMachine/1.7 (participate in the frantic)]
+    status: {code: 200, message: OK}
+version: 1

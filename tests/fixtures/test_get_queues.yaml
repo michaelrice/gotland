@@ -1,0 +1,21 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Z3Vlc3Q6Z3Vlc3Q=]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.4.1 CPython/2.7.8 Darwin/13.4.0]
+    method: GET
+    uri: http://localhost:55672/api/queues
+  response:
+    body: {string: !!python/unicode '[{"memory":21656,"idle_since":"2014-9-30 3:44:29","exclusive_consumer_tag":"","messages_ready":0,"messages_unacknowledged":0,"messages":0,"consumers":0,"slave_nodes":[],"backing_queue_status":{"q1":0,"q2":0,"delta":["delta","undefined",0,"undefined"],"q3":0,"q4":0,"len":0,"pending_acks":0,"target_ram_count":"infinity","ram_msg_count":0,"ram_ack_count":0,"next_seq_id":1,"persistent_count":0,"avg_ingress_rate":0.0,"avg_egress_rate":0.0,"avg_ack_ingress_rate":0.0,"avg_ack_egress_rate":0.0},"messages_details":{"rate":0,"interval":1000721,"last_event":1412048669480},"messages_ready_details":{"rate":0,"interval":1000721,"last_event":1412048669480},"messages_unacknowledged_details":{"rate":0,"interval":1000721,"last_event":1412048669480},"name":"aliveness-test","vhost":"/","durable":false,"auto_delete":false,"arguments":{},"node":"rabbit@precise64"}]'}
+    headers:
+      cache-control: [no-cache]
+      content-length: ['855']
+      content-type: [application/json]
+      date: ['Tue, 30 Sep 2014 04:11:41 GMT']
+      server: [MochiWeb/1.1 WebMachine/1.7 (participate in the frantic)]
+    status: {code: 200, message: OK}
+version: 1
