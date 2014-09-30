@@ -6,7 +6,7 @@ Pythons for rabbitmq http api
 
 License
 =======
-MIT
+Apache-2.0
 
 
 Examples
