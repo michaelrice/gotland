@@ -1,14 +1,10 @@
 import unittest
-import sys
-
 import vcr
-
-sys.path.append('../')
 from gotland.rabbit import api
 import tests
 
 
-class RabbitApiTests(unittest.TestCase):
+class RabbitApiTests(tests.VCRBasedTests):
 
     rabbit = api.Client(end_point='http://localhost:55672/api/')
 
