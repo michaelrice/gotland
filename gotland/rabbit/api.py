@@ -1,7 +1,10 @@
 from __future__ import absolute_import
 
 import json
-import urllib
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -106,7 +109,7 @@ class Client(object):
 
     def get_connections_name(self, name):
         """Gets info for an individual connection"""
-        name = urllib.quote(name)
+        name = quote(name)
         path = self.end_point + "connections/{0}".format(name)
         data = self._get_data(path)
         return data
@@ -119,7 +122,7 @@ class Client(object):
 
     def get_channels_name(self, channel=None):
         """Info about a specific channel"""
-        channel = urllib.quote(channel)
+        channel = quote(channel)
         path = self.end_point + "channels/{0}".format(channel)
         data = self._get_data(path)
         return data
