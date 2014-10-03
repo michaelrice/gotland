@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/michaelrice/gotland.svg?branch=devel)](https://travis-ci.org/michaelrice/gotland)
+
 gotland
 =======
 
