@@ -27,9 +27,9 @@ with open('test-requirements.txt') as f:
 
 setup(
     name='gotland',
-    version='0.1',
+    version='0.2',
     description='python bindings to the rabbitmq web based REST api',
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
     packages=['gotland'],
     url='https://github.com/michaelrice/gotland',
     install_requires=required,
