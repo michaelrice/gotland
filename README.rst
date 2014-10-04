@@ -1,5 +1,5 @@
 .. image:: https://travis-ci.org/michaelrice/gotland.svg
-:target: https://travis-ci.org/michaelrice/gotland
+    :target: https://travis-ci.org/michaelrice/gotland
     :alt: Build Status
 
 gotland
