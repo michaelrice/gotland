@@ -30,7 +30,7 @@ setup(
     version='0.2',
     description='python bindings to the rabbitmq web based REST api',
     long_description=read('README.rst'),
-    packages=['gotland'],
+    packages=['gotland', 'gotland.rabbit'],
     url='https://github.com/michaelrice/gotland',
     install_requires=required,
     license='License :: OSI Approved :: Apache Software License',
