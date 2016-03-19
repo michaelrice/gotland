@@ -16,9 +16,9 @@ from __future__ import absolute_import
 
 import json
 try:
-    from urllib import quote
+    from urllib import quote, quote_plus
 except ImportError:
-    from urllib.parse import quote
+    from urllib.parse import quote, quote_plus
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -67,14 +67,14 @@ class Client(object):
                                      auth=self.auth)
         return response.json()
 
-    def check_aliveness(self, vhost="%2f"):
+    def check_aliveness(self, vhost='/'):
         """Check aliveness of a given vhost. By default / will be checked.
         Usage::
         myapi = api()
         if not myapi.check_aliveness():
             handle_down_event()
         """
-        path = self.end_point + "aliveness-test/" + vhost
+        path = self.end_point + "aliveness-test/" + quote_plus(vhost)
         data = self._get_data(path)
         if data is None:
             return False
@@ -147,22 +147,23 @@ class Client(object):
         data = self._get_data(path)
         return data
 
-    def get_exchanges_vhost(self, vhost="%2f"):
+    def get_exchanges_vhost(self, vhost='/'):
         """List of all exchanges on a given vhost"""
-        path = self.end_point + "exchanges/{0}".format(vhost)
+        path = self.end_point + "exchanges/{0}".format(quote_plus(vhost))
         data = self._get_data(path)
         return data
 
-    def get_exchanges_name_vhost(self, vhost="%2f", exchange_name=None):
+    def get_exchanges_name_vhost(self, vhost='/', exchange_name=None):
         """Gets info about a given echange (name) on a given vhost"""
+        vhost = quote_plus(vhost)
         path = self.end_point + "exchanges/{0}/{1}".format(vhost, exchange_name)
         return self._get_data(path)
 
-    def get_bindings_for_exchange(self, vhost="%2f", exchange_name=None,
+    def get_bindings_for_exchange(self, vhost='/', exchange_name=None,
             stype="source"):
         """A list of all bindings in which a given exchange is the source."""
         path = self.end_point + "exchanges/{0}/{1}/bindings/{2}"
-        path = path.format(vhost, exchange_name, stype)
+        path = path.format(quote_plus(vhost), exchange_name, stype)
         return self._get_data(path)
 
     def get_queues(self):
@@ -170,22 +171,23 @@ class Client(object):
         path = self.end_point + "queues"
         return self._get_data(path)
 
-    def get_queues_by_vhost(self, vhost="%2f"):
+    def get_queues_by_vhost(self, vhost='/'):
         """A list of all queues in a given virtual host."""
-        path = self.end_point + "queues/{0}".format(vhost)
+        path = self.end_point + "queues/{0}".format(quote_plus(vhost))
         return self._get_data(path)
 
-    def get_queue_by_name(self, queue_name=None, vhost="%2f"):
+    def get_queue_by_name(self, queue_name=None, vhost='/'):
         """Inforation about an individual queue. Takes optional vhost param
         Checks / as the default vhost"""
+        vhost = quote_plus(vhost)
         path = self.end_point + "queues/{0}/{1}".format(vhost, queue_name)
         return self._get_data(path)
 
-    def get_bindings_by_queue(self, queue_name=None, vhost="%2f"):
+    def get_bindings_by_queue(self, queue_name=None, vhost='/'):
         """A list of all bindings on a given queue. Takes an optional
         vhost param. The default vhost is /"""
         path = self.end_point + "queues/{0}/{1}/bindings"
-        path = path.format(vhost, queue_name)
+        path = path.format(quote_plus(vhost), queue_name)
         return self._get_data(path)
 
     def get_bindings(self):
@@ -193,18 +195,18 @@ class Client(object):
         path = self.end_point + "bindings"
         return self._get_data(path)
 
-    def get_bindings_by_vhost(self, vhost="%2f"):
+    def get_bindings_by_vhost(self, vhost='/'):
         """A list of all bindings in a given virtual host."""
-        path =  self.end_point + "bindings/{0}".format(vhost)
+        path =  self.end_point + "bindings/{0}".format(quote_plus(vhost))
         return self._get_data(path)
 
     def get_bindings_between_exchange_and_queue(self, queue_name=None,
-            exchange_name=None, vhost=None):
+            exchange_name=None, vhost='/'):
         """A list of all bindings between an exchange and a queue.
         Remember, an exchange and a queue can be bound together many times!
         """
         path = self.end_point + "bindings/{0}/e/{1}/q/{2}"
-        path = path.format(vhost, exchange_name, queue_name)
+        path = path.format(quote_plus(vhost), exchange_name, queue_name)
         return self._get_data(path)
 
     def update_bindings_between_exchange_and_queue(self):
@@ -219,23 +221,24 @@ class Client(object):
         pass
 
     def get_binding_between_exchange_and_queue(self, queue_name=None,
-            exchange_name=None, vhost="%2f"):
+            exchange_name=None, vhost='/'):
         """
         An individual binding between an exchange and a queue.
         The props part of the URI is a "name" for the binding composed of
         its routing key and a hash of its arguments.
         """
         path = self.end_point + "bindings/{0}/e/{1}/q/{2}/props"
-        path = path.format(vhost, exchange_name, queue_name)
+        path = path.format(quote_plus(vhost), exchange_name, queue_name)
         return self._get_data(path)
 
     def get_bindings_between_exchanges(self, exchange_name_s=None,
-            exchange_name_d=None, stype="destination", vhost="%2f"):
+            exchange_name_d=None, stype="destination", vhost='/'):
         """A list of all bindings between two exchanges. Similar to the list
         of all bindings between an exchange and a queue, above.
         stype can be either "destination" or "props"
         """
         path = self.end_point + "bindings/{0}/e/{1}/e/{2}/{3}"
+        vhost = quote_plus(vhost)
         path = path.format(vhost, exchange_name_s, exchange_name_d, stype)
         return self._get_data(path)
 
@@ -244,15 +247,16 @@ class Client(object):
         path = self.end_point + "vhosts"
         return self._get_data(path)
 
-    def get_vhost_by_name(self, vhost="%2f"):
+    def get_vhost_by_name(self, vhost='/'):
         """An individual virtual host. As a virtual host only has a name,
         you do not need an HTTP body when PUTing one of these.
         """
-        path = self.end_point + "vhosts/{0}".format(vhost)
+        path = self.end_point + "vhosts/{0}".format(quote_plus(vhost))
         return self._get_data(path)
 
-    def get_premissions_by_vhost(self, vhost="%2f"):
+    def get_premissions_by_vhost(self, vhost='/'):
         """A list of all permissions for a given virtual host."""
+        vhost = quote_plus(vhost)
         path = self.end_point + "vhosts/{0}/permissions".format(vhost)
         return self._get_data(path)
 
@@ -281,8 +285,9 @@ class Client(object):
         path = self.end_point + "permissions"
         return self._get_data(path)
 
-    def get_user_permissions_by_vhost(self, username="guest", vhost="%2f"):
+    def get_user_permissions_by_vhost(self, username="guest", vhost='/'):
         """An individual permission of a user and virtual host."""
+        vhost = quote_plus(vhost)
         path = self.end_point + "permissions/{0}/{1}".format(vhost, username)
         return self._get_data(path)
 
@@ -297,16 +302,17 @@ class Client(object):
         return self._get_data(path)
 
     def get_parameters_by_component_by_vhost(self, component=None,
-            vhost="%2f"):
+            vhost='/'):
         """A list of all parameters for a given component and virtual host"""
+        vhost = quote_plus(vhost)
         path = self.end_point + "parameters/{1}/{0}".format(vhost, component)
         return self._get_data(path)
 
     def get_parameter_for_vhost_by_component_name(self, component=None,
-            parameter_name=None, vhost="%2f"):
+            parameter_name=None, vhost='/'):
         """Get an individual parameter value from a given vhost & component"""
         path = self.end_point + "parameters/{1}/{0}/{2}"
-        path = path.format(vhost, component, parameter_name)
+        path = path.format(quote_plus(vhost), component, parameter_name)
         return self._get_data(path)
 
     def get_policies(self):
@@ -314,18 +320,19 @@ class Client(object):
         path = self.end_point + "policies"
         return self._get_data(path)
 
-    def get_policies_by_vhost(self, vhost="%2f"):
+    def get_policies_by_vhost(self, vhost='/'):
         """A list of all policies in a given virtual host."""
-        path = self.end_point + "policies/{0}".format(vhost)
+        path = self.end_point + "policies/{0}".format(quote_plus(vhost))
         return self._get_data(path)
 
-    def get_policy_for_vhost_by_name(self, name=None, vhost="%2f"):
+    def get_policy_for_vhost_by_name(self, name=None, vhost='/'):
         """Information about an individual policy"""
+        vhost = quote_plus(vhost)
         path = self.end_point + "policies/{0}/{1}".format(vhost, name)
         return self._get_data(path)
 
     def create_exchange_on_vhost(self, exchange_name=None,
-            body={}, vhost="%2f"):
+            body={}, vhost='/'):
         """An individual exchange. To PUT an exchange, you will need a body
         looking something like this:
         {
@@ -337,10 +344,11 @@ class Client(object):
             "arguments":[]
         }
         """
+        vhost = quote_plus(vhost)
         path = self.end_point + "exchanges/{0}/{1}".format(vhost, exchange_name)
         return self._send_data(path, data=body)
 
-    def create_queue_on_vhost(self, queue_name=None, body={}, vhost="%2f"):
+    def create_queue_on_vhost(self, queue_name=None, body={}, vhost='/'):
         """An individual queue. To PUT a queue, you will need a body looking
         something like this:
         {
@@ -350,13 +358,14 @@ class Client(object):
             "node":"rabbit@localnode-1"
         }
         """
+        vhost = quote_plus(vhost)
         path = self.end_point + "queues/{0}/{1}".format(vhost, queue_name)
         return self._send_data(path, data=body)
 
-    def create_vhost(self, vhost=None):
+    def create_vhost(self, vhost):
         """An individual virtual host. As a virtual host only has a name,
         you do not need an HTTP body when PUTing one of these."""
-        path = self.end_point + "vhosts/{0}".format(vhost)
+        path = self.end_point + "vhosts/{0}".format(quote_plus(vhost))
         return self._send_data(path)
 
     def create_user(self, username, body={}):
@@ -384,7 +393,7 @@ class Client(object):
         return self._send_data(path, data=body)
 
     def grant_permissions_on_vhost(self, body={}, username=None,
-            vhost="%2f"):
+            vhost='/'):
         """An individual permission of a user and virtual host. To PUT a
         permission, you will need a body looking something like this:
         {
@@ -394,11 +403,12 @@ class Client(object):
         }
         All keys are mandatory.
         """
+        vhost = quote_plus(vhost)
         path = self.end_point + "permissions/{0}/{1}".format(vhost, username)
         return self._send_data(path, data=body)
 
     def update_parameter(self, component=None, body={}, parameter_name=None,
-            vhost="%2f"):
+            vhost='/'):
         """An individual parameter. To PUT a parameter, you will need a body
         looking something like this:
         {
@@ -408,10 +418,11 @@ class Client(object):
             "value":"guest"
         }
         """
+        vhost = quote_plus(vhost)
         path = "parameters/{1}/{0}/{2}".format(vhost, component, parameter_name)
         return self._send_data(path, data=body)
 
-    def update_policies(self, policy_name=None, body={}, vhost="%2f"):
+    def update_policies(self, policy_name=None, body={}, vhost='/'):
         """An individual policy. To PUT a policy, you will need a body
         looking something like this:
         {
@@ -423,6 +434,7 @@ class Client(object):
         }
         policies/vhost/name
         """
+        vhost = quote_plus(vhost)
         path = self.end_point + "policies/{0}/{1}".format(vhost, policy_name)
         return self._send_data(path, data=body)
 
@@ -431,21 +443,23 @@ class Client(object):
         path = self.end_point + "connections/" + name
         self._send_data(path, request_type='DELETE')
 
-    def delete_exchange(self, exchange_name=None, vhost="%2f"):
+    def delete_exchange(self, exchange_name=None, vhost='/'):
         """Delete an exchange from a vhost"""
+        vhost = quote_plus(vhost)
         path = self.end_point + "exchanges/{0}/{1}".format(vhost, exchange_name)
         self._send_data(path, request_type='DELETE')
 
-    def delete_queue(self, queue_name=None, vhost="%2f"):
+    def delete_queue(self, queue_name=None, vhost='/'):
         """Delete a queue from a vhost"""
+        vhost = quote_plus(vhost)
         path = self.end_point + "queues/{0}/{1}".format(vhost, queue_name)
         self._send_data(path, request_type='DELETE')
 
-    def delete_contents_from_queue(self, queue_name=None, vhost="%2f"):
+    def delete_contents_from_queue(self, queue_name=None, vhost='/'):
         """Delete the contents of a queue. If no vhost name is given the
         defult / will be used"""
         path = self.end_point + "queues/{0}/{1}/contents"
-        path = path.format(vhost, queue_name)
+        path = path.format(quote_plus(vhost), queue_name)
         self._send_data(path, request_type='DELETE')
 
     #def delete_thing(self):
@@ -453,9 +467,9 @@ class Client(object):
     #    part of the URI is a "name" for the binding composed of its routing
     #    key and a hash of its arguments."""
 
-    def delete_vhost(self, vhost=None):
+    def delete_vhost(self, vhost):
         """Delete a given vhost"""
-        path = self.end_point + "vhosts/{0}".format(vhost)
+        path = self.end_point + "vhosts/{0}".format(quote_plus(vhost))
         self._send_data(path, request_type='DELETE')
 
     def delete_user(self, user=None):
