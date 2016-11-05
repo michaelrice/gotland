@@ -65,6 +65,8 @@ class Client(object):
         else:
             response = requests.post(path, data=data, headers=headers,
                                      auth=self.auth)
+        if response.status_code == 204:
+            return
         return response.json()
 
     def check_aliveness(self, vhost='/'):

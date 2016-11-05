@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: '{"password": "password", "tags": ""}'
+    headers:
+      Accept: [application/json]
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Z3Vlc3Q6Z3Vlc3Q=]
+      Connection: [keep-alive]
+      Content-Length: ['36']
+      Content-type: [application/json]
+      User-Agent: [python-requests/2.11.1]
+    method: PUT
+    uri: http://localhost:55672/api/users/alice
+  response:
+    body: {string: ''}
+    headers:
+      Content-Encoding: [gzip]
+      Content-Length: ['0']
+      Content-Type: [application/json]
+      Date: ['Sat, 05 Nov 2016 08:12:53 GMT']
+      Server: [MochiWeb/1.1 WebMachine/1.10.0 (never breaks eye contact)]
+      vary: ['Accept-Encoding, origin']
+    status: {code: 204, message: No Content}
+version: 1
