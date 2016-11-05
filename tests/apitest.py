@@ -169,6 +169,19 @@ class RabbitApiTests(tests.VCRBasedTests):
         bindings = self.rabbit.get_bindings_by_vhost()
         self.assertIsInstance(bindings, list)
 
+    @vcr.use_cassette('test_create_user.yaml',
+                      cassette_library_dir=tests.fixtures_path,
+                      record_mode='once')
+    def test_create_user(self):
+        no_content = self.rabbit.create_user('alice', {"password": "password", "tags": ""})
+        self.assertIsNone(no_content)
+
+    @vcr.use_cassette('test_delete_user.yaml',
+                      cassette_library_dir=tests.fixtures_path,
+                      record_mode='once')
+    def test_delete_user(self):
+        no_content = self.rabbit.delete_user('alice')
+        self.assertIsNone(no_content)
 
 def main():
     unittest.main()
