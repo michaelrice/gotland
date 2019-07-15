@@ -17,7 +17,8 @@ from setuptools import setup
 
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    with open(os.path.join(os.path.dirname(__file__), fname)) as f:
+        return f.read()
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -27,7 +28,7 @@ with open('test-requirements.txt') as f:
 
 setup(
     name='gotland',
-    version='0.3',
+    version='0.4',
     description='python bindings to the rabbitmq web based REST api',
     long_description=read('README.rst'),
     packages=['gotland', 'gotland.rabbit'],
