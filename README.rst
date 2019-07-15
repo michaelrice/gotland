@@ -29,6 +29,3 @@ Installing
 
     pip install gotland
 
-Not Maintained
-==============
-This application is no longer maintained,
